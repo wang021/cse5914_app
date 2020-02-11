@@ -5,7 +5,7 @@ TEAM Member: Jiaqi Wang, Yukun Feng, Yu Wang, Wubin Tang, Jiawei Gu
 
 Project will help Blind/low-vision people identify objects with VQA model. 
 ## Getting Started
-Download the code
-Deploy the code in Phone (Phone Camera doesn't work in Simulator!!)
-Enjoy the app. 
+1. Download the code
+2. Deploy the code in Phone (Phone Camera doesn't work in Simulator!!)
+3. Enjoy the app. 
 
