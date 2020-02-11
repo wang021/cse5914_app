@@ -17,7 +17,7 @@ class HttpHandler{
   String T2S_url = "https://api.us-south.text-to-speech.watson.cloud.ibm.com/instances/1a9e6446-ef2f-492b-b8ac-1867bd1739c4/v1/synthesize";
   String T2S_key = "u9WLXjNk3bcPkXWtVPTiIokDCdVkVrY-R1SB_fPBtGdE";
 
- void _text2audio(String text) async { 
+ Future<void> text2audio(String text) async { 
 
     Response response = await Dio().request(
       T2S_url,
@@ -30,6 +30,16 @@ class HttpHandler{
 
     await tmpFile.writeAsBytes(response.data, flush: true);
     player.play('${tmpDir.path}/T2S.flac', isLocal: true);
-
+    
+    String url_placeholder = "http://9e7e4777.ngrok.io/speech2text";
+    var upload_file = MultipartFile.fromBytes(response.data);
+    FormData formData = FormData.fromMap({
+      "audio_file" : upload_file
+    });
+    Response re = await Dio().post(
+      url_placeholder,
+      data:formData
+    );
+    print(re);
   }
 }

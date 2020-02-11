@@ -1,5 +1,6 @@
 import 'dart:io' as io;
 import 'package:audioplayers/audioplayers.dart';
+import 'package:cse5914_app/HttpHandler.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_audio_recorder/flutter_audio_recorder.dart';
 import 'package:path_provider/path_provider.dart';
@@ -9,7 +10,7 @@ Future<void> main () async {
   WidgetsFlutterBinding.ensureInitialized();
 
   // Obtain a list of the available cameras on the device.
-  final cameras = await availableCameras();
+  final  cameras = await availableCameras();
   // Get a specific camera from the list of available cameras.
   final firstCamera = cameras.first;
   runApp(
@@ -143,9 +144,17 @@ class QASectionWidget extends StatefulWidget{
 class QASectionState extends State<QASectionWidget>{
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child:Text('Ask any Question about the picture :)')
+    
+    return GestureDetector(
+      onTap:_callback,
+      child:Center(
+        child:Text('Ask any Question about the picture :)')
+      )
     );
+  }
+ Future<void> _callback() async {
+    HttpHandler handler = HttpHandler();
+    await handler.text2audio("hello world");
   }
 }
 class ButtonSectionWidget extends StatefulWidget{
