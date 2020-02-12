@@ -8,7 +8,7 @@ class CameraWidget extends StatefulWidget{
   State<StatefulWidget> createState() => CameraState();
 
   final CameraDescription camera;
-
+  
   const CameraWidget({
     Key key,
     @required this.camera,
