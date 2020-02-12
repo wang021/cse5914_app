@@ -20,25 +20,39 @@ Future<void> main () async {
         appBar:AppBar(
           title:Text('Aoligei')
         ),
-        body: Flex(
-          direction: Axis.vertical,
-          children: <Widget>[
-            Expanded(
-              flex: 1,
-              child: CameraWidget(camera: firstCamera),
-            ),
-            Expanded(flex:1,
-            child: QASectionWidget()
-            ),
-            Expanded(flex:1,
-            child:ButtonSectionWidget())
-          ],
+        body: GestureDetector(
+          onVerticalDragStart:(details) async => await Future(sendVQARequest),
+          child:Flex(
+            direction: Axis.vertical,
+            children: <Widget>[
+              Expanded(
+                flex: 1,
+                child: CameraWidget(camera: firstCamera),
+              ),
+              Expanded(flex:1,
+              child: QASectionWidget()
+              ),
+              Expanded(flex:1,
+              child:ButtonSectionWidget())
+            ],
+          )
         )
       ),
     ),
   );
 }
-
+Future<void> sendVQARequest() async{
+  print("drag!!");
+  if(Data.audioPath!=null&&Data.imagePath!=null){
+    print("Sending http request...");
+    await Data.handler.get_answer(Data.audioPath, Data.imagePath);
+  }
+}
+class Data{
+  static String imagePath;
+  static String audioPath;
+  static HttpHandler handler = HttpHandler();
+}
 
 class QASectionWidget extends StatefulWidget{
   @override
@@ -175,6 +189,7 @@ class ButtionSectionState extends State<ButtonSectionWidget> {
     void _play() {
       AudioPlayer player = AudioPlayer();
       player.play(_recording.path, isLocal: true);
+      Data.audioPath = _recording.path;
     }
     
 

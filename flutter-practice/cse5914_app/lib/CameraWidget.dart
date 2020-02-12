@@ -3,17 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:camera/camera.dart';
 import 'package:path/path.dart' show join;
+import 'main.dart';
 class CameraWidget extends StatefulWidget{
   @override
   State<StatefulWidget> createState() => CameraState();
 
   final CameraDescription camera;
   
-  const CameraWidget({
+   CameraWidget({
     Key key,
     @required this.camera,
   }) : super(key: key);
-  
 }
 class CameraState extends State<CameraWidget>{
   CameraController _controller;
@@ -90,7 +90,7 @@ class CameraState extends State<CameraWidget>{
               '${DateTime.now()}.png',
             );
             // Attempt to take a picture and log where it's been saved.
-            await _controller.takePicture(path).then((_)=> imagePath = path).then((_)=> switchToImageDisplay());
+            await _controller.takePicture(path).then((_)=> Data.imagePath = imagePath = path).then((_)=> switchToImageDisplay());
           } catch (e) {
             // If an error occurs, log the error to the console.
             print(e);
