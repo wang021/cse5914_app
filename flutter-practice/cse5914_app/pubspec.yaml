@@ -53,11 +53,11 @@ flutter:
   #  - images/a_dot_burr.jpeg
   #  - images/a_dot_ham.jpeg
   assets:
-     - audio/photo_confirmation.wav
-     - audio/audio_confirmation.wav
-     - audio/intro.wav
-     - audio/photo_begin.wav
-     - audio/audio_begin.wav
+     - assets/photo_confirmation.wav
+     - assets/audio_confirmation.wav
+     - assets/intro.wav
+     - assets/photo_begin.wav
+     - assets/audio_begin.wav
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 

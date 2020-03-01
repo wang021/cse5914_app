@@ -1,8 +1,13 @@
 import 'dart:io' as io;
+import 'dart:io';
+import 'dart:typed_data';
+import 'package:audioplayers/audio_cache.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:cse5914_app/HttpHandler.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_audio_recorder/flutter_audio_recorder.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:camera/camera.dart';
 
@@ -26,13 +31,55 @@ Future<void> main () async {
             direction: Axis.vertical,
             children: <Widget>[
               Expanded(
-                flex: 1,
-                child: CameraWidget(camera: firstCamera),
+                flex:1,
+                child: 
+                  Flex(
+                    direction: Axis.horizontal,
+                    children: <Widget>[
+                      Expanded(
+                      flex: 1,
+                      child: Container(
+                        child: CameraWidget(camera: firstCamera),
+                        decoration: BoxDecoration(
+                          border:Border(
+                            right:BorderSide(
+                              color:Colors.lightBlue,
+                              width:3.0
+                            ),
+                            bottom: BorderSide(
+                              color:Colors.lightBlue,
+                              width:3.0
+                            )
+                          )
+                        ),
+                      )
+                      ,
+                      
+                    ),
+                      Expanded(
+                      flex:1,
+                      child: 
+                      Container(
+                        child:QASectionWidget(),
+                        decoration:BoxDecoration(
+                            border: Border(
+                              left:BorderSide(
+                              color:Colors.lightBlue,
+                              width:3.0
+                            ),
+                            bottom: BorderSide(
+                              color:Colors.lightBlue,
+                              width:3.0
+                            )
+                            )
+                         )
+                      )
+                      
+                    )
+                    ],
+                  )
               ),
-              Expanded(flex:1,
-              child: QASectionWidget()
-              ),
-              Expanded(flex:1,
+              Expanded(flex:3,
               child:ButtonSectionWidget())
             ],
           )
@@ -64,15 +111,10 @@ class QASectionState extends State<QASectionWidget>{
   Widget build(BuildContext context) {
     
     return GestureDetector(
-      onTap:_callback,
       child:Center(
-        child:Text('Ask any Question about the picture :)')
+        child:Text('Your Questions:')
       )
     );
-  }
- Future<void> _callback() async {
-    HttpHandler handler = HttpHandler();
-    await handler.text2audio("hello world");
   }
 }
 class ButtonSectionWidget extends StatefulWidget{
@@ -86,7 +128,8 @@ class ButtionSectionState extends State<ButtonSectionWidget> {
   Recording _recording;
   String _alert;
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context){
+    
     return GestureDetector(
       onTap:_opt,
       child:
@@ -99,10 +142,10 @@ class ButtionSectionState extends State<ButtonSectionWidget> {
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.center,
         children:[
-          Icon(Icons.keyboard_voice
+          Icon(Icons.trip_origin
           ,color:Theme.of(context).primaryColor,
-          size:60),
-          Text('$text')
+          size:80),
+          Text(text)
         ],
       )
       )
@@ -111,11 +154,17 @@ class ButtionSectionState extends State<ButtonSectionWidget> {
     );
   }
   @override
-  void initState() {
+  Future<void> initState() async{
     super.initState();
     Future.microtask(() {
       _prepare();
     });
+    
+    FlutterTts tts = FlutterTts();
+    await tts.setLanguage("en-US");
+    await tts.setSpeechRate(0.5);
+    tts.speak("Welcome to the application! tap the bottom section to start. ");
+    
   }
     Future _init() async {
     String customPath = '/flutter_audio_recorder_';
@@ -154,6 +203,7 @@ class ButtionSectionState extends State<ButtonSectionWidget> {
         });
       }
   }
+  
     void _opt() async {
     switch (_recording.status) {
       case RecordingStatus.Initialized:

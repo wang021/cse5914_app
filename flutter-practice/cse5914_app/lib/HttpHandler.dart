@@ -15,7 +15,7 @@ class HttpHandler{
   String txt2audio_url = "https://api.us-south.text-to-speech.watson.cloud.ibm.com/instances/1a9e6446-ef2f-492b-b8ac-1867bd1739c4/v1/synthesize";
   String txt2audio_key = "u9WLXjNk3bcPkXWtVPTiIokDCdVkVrY-R1SB_fPBtGdE";
   
-  String backend_url = "http://1667d9d8.ngrok.io";
+  String backend_url = "http://45cf59a3.ngrok.io";
 
   Future<void> text2audio(String text) async {
     print(text);
