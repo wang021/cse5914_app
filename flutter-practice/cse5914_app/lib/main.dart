@@ -21,7 +21,7 @@ Future<void> main () async {
           title:Text('Aoligei')
         ),
         body: GestureDetector(
-          onVerticalDragStart:(details) async => await Future(sendVQARequest),
+          onVerticalDragStart:(details) async => await sendVQARequest(),
           child:Flex(
             direction: Axis.vertical,
             children: <Widget>[
@@ -48,6 +48,7 @@ Future<void> sendVQARequest() async{
     await Data.handler.get_answer(Data.audioPath, Data.imagePath);
   }
 }
+
 class Data{
   static String imagePath;
   static String audioPath;
